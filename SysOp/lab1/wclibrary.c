@@ -27,11 +27,14 @@ void read_from_files(char** file_names, int file_number) {
     strcat(wc_command, prefix);
     for(int i = 0; i < file_number; i++) {
         strcat(wc_command, file_names[i]);
+        strcat(wc_command, " ");
     }
     strcat(wc_command, suffix);
 
     //execute command
     system(wc_command);
+
+    free(wc_command);
 }
 
 int find_free_pointer() {
@@ -65,6 +68,8 @@ int save_to_array() {
 
     return block_index;
 }
+
+
 
 void remove_block(int block_index) {
     if (block_index >= TABLE_SIZE) {

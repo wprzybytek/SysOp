@@ -3,7 +3,7 @@ CFLAGS = -Wall
 
 static:
 	$(CC) $(CFLAGS) -c wclibrary.c
-	ar $(CFLAGS) -rcs libwclibrary.a wclibrary.o
+	ar -rcs libwclibrary.a wclibrary.o
 	$(CC) $(CFLAGS) main.c -o main -L. -lwclibrary
 
 shared:
