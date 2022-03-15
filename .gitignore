@@ -1,6 +1,10 @@
 # Default ignored files
-/.idea/
-/.vscode/
-/*.o
-/*.so
-/*.a
+.idea/
+.vscode/
+*.o
+*.so
+*.a
+main
+test
+!main.c
+!test.c
