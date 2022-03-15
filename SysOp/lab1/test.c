@@ -4,13 +4,14 @@
 #include <stdlib.h>
 
 int main(int argc, char** argv) {
-    int i = 2;
+    int i = 1;
     while(i < argc) {
-        
+
         if(strcmp(argv[i], "create_table") == 0) {
-            create_pointers_array(atoi(argv[i+1]));
+            create_pointers_array(atoi(i + 1));
             i += 2;
         }
+
         else if(strcmp(argv[i], "wc_files") == 0) {
             int files_number = atoi(argv[i + 1]);
             char** files = calloc(files_number, sizeof(char*));
@@ -21,12 +22,14 @@ int main(int argc, char** argv) {
             i += 2 + files_number;
             read_from_files(files, files_number);
         }
+
         else if(strcmp(argv[i], "remove_block") == 0) {
             remove_block(atoi(argv[i + 1]));
             i += 2;
         }
+
         else {
-            printf("Unknown command at index %d\n", i);
+            printf("Unknown command at index %d\n", argv[i]);
             return 1;
         }
     }

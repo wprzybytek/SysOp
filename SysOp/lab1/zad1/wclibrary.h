@@ -1,6 +1,6 @@
 void create_pointers_array(int size);
 
-int read_from_files(char** file_names, int file_number);
+void read_from_files(char** file_names, int file_number);
 
 int find_free_pointer();
 
