@@ -47,10 +47,10 @@ int save_to_array() {
     return block_index;
 }
 
-void read_from_files(char** file_names, int file_number) {
+int read_from_files(char** file_names, int file_number) {
     if(file_number <= 0) {
         printf("Put one or more files\n");
-        return;
+        return -1;
     }
 
     int files_len = 0;
@@ -77,7 +77,8 @@ void read_from_files(char** file_names, int file_number) {
 
     free(wc_command);
 
-    save_to_array();
+    int index = save_to_array();
+    return index;
 }
 
 void remove_block(int block_index) {

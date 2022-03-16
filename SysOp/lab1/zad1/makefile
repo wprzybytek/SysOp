@@ -1,13 +1,14 @@
 CC = gcc
 CFLAGS = -Wall
+LIBRARY = wclibrary
 
 static:
-	$(CC) $(CFLAGS) -c wclibrary.c
-	ar -rcs libwclibrary.a wclibrary.o
+	$(CC) $(CFLAGS) -c $(LIBRARY).c
+	ar -rcs lib$(LIBRARY).a $(LIBRARY).o
 
 shared:
-	$(CC) $(CFLAGS) -fPIC -c wclibrary.c
-	$(CC) $(CFLAGS) -shared -fPIC -o libwclibrary.so wclibrary.o
+	$(CC) $(CFLAGS) -fPIC -c $(LIBRARY).c
+	$(CC) $(CFLAGS) -shared -fPIC -o lib$(LIBRARY).so $(LIBRARY).o
 
 clean:
 	rm -f *.o *.a *.so tmp
