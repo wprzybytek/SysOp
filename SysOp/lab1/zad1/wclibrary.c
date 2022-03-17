@@ -7,8 +7,21 @@ char** POINTERS_ARRAY;
 int TABLE_SIZE;
 
 void create_pointers_array(int size) {
+    if(size < 1) {
+        printf("Size must be integer greater than zero.\n");
+        return;
+    }
     TABLE_SIZE = size;
-    POINTERS_ARRAY = calloc(TABLE_SIZE, sizeof(char*));
+    POINTERS_ARRAY = (char**)calloc(TABLE_SIZE, sizeof(char*));
+}
+
+void free_pointers_array() {
+    for(int i = 0; i < TABLE_SIZE; i++) {
+        if(POINTERS_ARRAY[i] != NULL) {
+            free(POINTERS_ARRAY[i]);
+        }
+    }
+    free(POINTERS_ARRAY);
 }
 
 int find_free_pointer() {
@@ -82,8 +95,13 @@ int read_from_files(char** file_names, int file_number) {
 }
 
 void remove_block(int block_index) {
-    if (block_index >= TABLE_SIZE) {
+    if (block_index >= TABLE_SIZE || block_index < 0) {
         printf("Array does not contain this index\n");
+        return;
+    }
+    if (POINTERS_ARRAY[block_index] == NULL) {
+        printf("Pointer at index pointing to no data\n");
     }
     free(POINTERS_ARRAY[block_index]);
+    POINTERS_ARRAY[block_index] = NULL;
 }
