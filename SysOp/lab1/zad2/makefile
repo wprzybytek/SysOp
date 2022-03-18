@@ -23,4 +23,4 @@ tests:
 
 clean:
 	make -C ../zad1 clean
-	rm -f test tmp raport2.txt
+	rm -f test tmp
