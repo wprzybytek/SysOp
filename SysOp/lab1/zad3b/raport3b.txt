@@ -1,198 +1,202 @@
 
  static O0
 1 small
-wc_files - real time: 0.000000, system time: 0.000000, user time: 0.000000
-remove_block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+wc files - real time: 0.010000, system time: 0.000000, user time: 0.000000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
 1 medium
-wc_files - real time: 0.010000, system time: 0.000000, user time: 0.000000
-remove_block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+wc files - real time: 0.000000, system time: 0.000000, user time: 0.000000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
 1 big
-wc_files - real time: 0.040000, system time: 0.000000, user time: 0.000000
-remove_block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+wc files - real time: 0.050000, system time: 0.000000, user time: 0.040000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
 3 files
-wc_files - real time: 0.050000, system time: 0.000000, user time: 0.000000
-remove_block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+wc files - real time: 0.040000, system time: 0.000000, user time: 0.040000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
 6 files
-wc_files - real time: 0.100000, system time: 0.000000, user time: 0.000000
-remove_block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+wc files - real time: 0.080000, system time: 0.000000, user time: 0.080000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
 10 files
-wc_files - real time: 0.130000, system time: 0.000000, user time: 0.000000
-remove_block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+wc files - real time: 0.120000, system time: 0.000000, user time: 0.120000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
 add and remove
-add and remove big file 20 times - real time: 4.350000, system time: 0.000000, user time: 0.000000
+add and delete big file 100 times - real time: 4.340000, system time: 0.030000, user time: 4.290000
 
  static O3
 1 small
-wc_files - real time: 0.000000, system time: 0.000000, user time: 0.000000
-remove_block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+wc files - real time: 0.000000, system time: 0.000000, user time: 0.000000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
 1 medium
-wc_files - real time: 0.010000, system time: 0.000000, user time: 0.000000
-remove_block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+wc files - real time: 0.000000, system time: 0.000000, user time: 0.000000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
 1 big
-wc_files - real time: 0.040000, system time: 0.000000, user time: 0.000000
-remove_block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+wc files - real time: 0.050000, system time: 0.000000, user time: 0.030000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
 3 files
-wc_files - real time: 0.040000, system time: 0.000000, user time: 0.000000
-remove_block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+wc files - real time: 0.040000, system time: 0.000000, user time: 0.040000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
 6 files
-wc_files - real time: 0.080000, system time: 0.000000, user time: 0.000000
-remove_block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+wc files - real time: 0.090000, system time: 0.000000, user time: 0.080000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
 10 files
-wc_files - real time: 0.130000, system time: 0.000000, user time: 0.000000
-remove_block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+wc files - real time: 0.130000, system time: 0.000000, user time: 0.120000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
 add and remove
-add and remove big file 20 times - real time: 4.360000, system time: 0.010000, user time: 0.000000
+add and delete big file 100 times - real time: 4.350000, system time: 0.050000, user time: 4.280000
 
  static Os
 1 small
-wc_files - real time: 0.000000, system time: 0.000000, user time: 0.000000
-remove_block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+wc files - real time: 0.000000, system time: 0.000000, user time: 0.000000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
 1 medium
-wc_files - real time: 0.000000, system time: 0.000000, user time: 0.000000
-remove_block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+wc files - real time: 0.000000, system time: 0.000000, user time: 0.000000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
 1 big
-wc_files - real time: 0.050000, system time: 0.000000, user time: 0.000000
-remove_block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+wc files - real time: 0.040000, system time: 0.000000, user time: 0.040000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
 3 files
-wc_files - real time: 0.050000, system time: 0.000000, user time: 0.000000
-remove_block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+wc files - real time: 0.040000, system time: 0.000000, user time: 0.040000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
 6 files
-wc_files - real time: 0.080000, system time: 0.000000, user time: 0.000000
-remove_block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+wc files - real time: 0.090000, system time: 0.000000, user time: 0.080000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
 10 files
-wc_files - real time: 0.130000, system time: 0.000000, user time: 0.000000
-remove_block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+wc files - real time: 0.130000, system time: 0.000000, user time: 0.120000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
 add and remove
-add and remove big file 20 times - real time: 4.340000, system time: 0.010000, user time: 0.000000
+add and delete big file 100 times - real time: 4.360000, system time: 0.060000, user time: 4.280000
 
  shared O0
 1 small
-wc_files - real time: 0.000000, system time: 0.000000, user time: 0.000000
-remove_block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+wc files - real time: 0.000000, system time: 0.000000, user time: 0.000000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
 1 medium
-wc_files - real time: 0.010000, system time: 0.000000, user time: 0.000000
-remove_block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+wc files - real time: 0.000000, system time: 0.000000, user time: 0.000000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
 1 big
-wc_files - real time: 0.040000, system time: 0.000000, user time: 0.000000
-remove_block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+wc files - real time: 0.040000, system time: 0.000000, user time: 0.040000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
 3 files
-wc_files - real time: 0.040000, system time: 0.000000, user time: 0.000000
-remove_block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+wc files - real time: 0.050000, system time: 0.000000, user time: 0.040000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
 6 files
-wc_files - real time: 0.090000, system time: 0.000000, user time: 0.000000
-remove_block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+wc files - real time: 0.080000, system time: 0.000000, user time: 0.080000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
 10 files
-wc_files - real time: 0.130000, system time: 0.000000, user time: 0.000000
-remove_block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+wc files - real time: 0.120000, system time: 0.000000, user time: 0.120000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
 add and remove
-add and remove big file 20 times - real time: 4.350000, system time: 0.000000, user time: 0.010000
+add and delete big file 100 times - real time: 4.360000, system time: 0.060000, user time: 4.280000
 
  shared O3
 1 small
-wc_files - real time: 0.000000, system time: 0.000000, user time: 0.000000
-remove_block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+wc files - real time: 0.000000, system time: 0.000000, user time: 0.000000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
 1 medium
-wc_files - real time: 0.000000, system time: 0.000000, user time: 0.000000
-remove_block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+wc files - real time: 0.000000, system time: 0.000000, user time: 0.000000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
 1 big
-wc_files - real time: 0.040000, system time: 0.000000, user time: 0.000000
-remove_block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+wc files - real time: 0.040000, system time: 0.000000, user time: 0.040000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
 3 files
-wc_files - real time: 0.050000, system time: 0.000000, user time: 0.000000
-remove_block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+wc files - real time: 0.050000, system time: 0.000000, user time: 0.030000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
 6 files
-wc_files - real time: 0.090000, system time: 0.000000, user time: 0.000000
-remove_block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+wc files - real time: 0.080000, system time: 0.000000, user time: 0.080000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
 10 files
-wc_files - real time: 0.130000, system time: 0.000000, user time: 0.000000
-remove_block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+wc files - real time: 0.120000, system time: 0.000000, user time: 0.120000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
 add and remove
-add and remove big file 20 times - real time: 4.370000, system time: 0.010000, user time: 0.000000
+add and delete big file 100 times - real time: 4.360000, system time: 0.060000, user time: 4.270000
 
  shared Os
 1 small
-wc_files - real time: 0.000000, system time: 0.000000, user time: 0.000000
-remove_block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+wc files - real time: 0.000000, system time: 0.000000, user time: 0.000000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
 1 medium
-wc_files - real time: 0.000000, system time: 0.000000, user time: 0.000000
-remove_block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+wc files - real time: 0.000000, system time: 0.000000, user time: 0.000000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
 1 big
-wc_files - real time: 0.050000, system time: 0.000000, user time: 0.000000
-remove_block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+wc files - real time: 0.050000, system time: 0.000000, user time: 0.040000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
 3 files
-wc_files - real time: 0.040000, system time: 0.000000, user time: 0.000000
-remove_block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+wc files - real time: 0.040000, system time: 0.000000, user time: 0.040000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
 6 files
-wc_files - real time: 0.090000, system time: 0.000000, user time: 0.000000
-remove_block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+wc files - real time: 0.080000, system time: 0.000000, user time: 0.080000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
 10 files
-wc_files - real time: 0.130000, system time: 0.000000, user time: 0.000000
-remove_block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+wc files - real time: 0.120000, system time: 0.000000, user time: 0.120000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
 add and remove
-add and remove big file 20 times - real time: 4.380000, system time: 0.010000, user time: 0.000000
+add and delete big file 100 times - real time: 4.350000, system time: 0.060000, user time: 4.270000
 
  dynamic O0
 1 small
-wc_files - real time: 0.000000, system time: 0.000000, user time: 0.000000
-remove_block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+wc files - real time: 0.000000, system time: 0.000000, user time: 0.000000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
 1 medium
-wc_files - real time: 0.000000, system time: 0.000000, user time: 0.000000
-remove_block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+wc files - real time: 0.000000, system time: 0.000000, user time: 0.000000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
 1 big
-wc_files - real time: 0.050000, system time: 0.000000, user time: 0.000000
-remove_block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+wc files - real time: 0.040000, system time: 0.000000, user time: 0.040000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
 3 files
-wc_files - real time: 0.040000, system time: 0.000000, user time: 0.000000
-remove_block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+wc files - real time: 0.040000, system time: 0.000000, user time: 0.040000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
 6 files
-wc_files - real time: 0.080000, system time: 0.000000, user time: 0.000000
-remove_block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+wc files - real time: 0.090000, system time: 0.000000, user time: 0.080000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
 10 files
-wc_files - real time: 0.130000, system time: 0.000000, user time: 0.000000
-remove_block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+wc files - real time: 0.130000, system time: 0.000000, user time: 0.120000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
 add and remove
-add and remove big file 20 times - real time: 4.370000, system time: 0.010000, user time: 0.000000
+add and delete big file 100 times - real time: 4.350000, system time: 0.060000, user time: 4.270000
 
  dynamic O3
 1 small
-wc_files - real time: 0.000000, system time: 0.000000, user time: 0.000000
-remove_block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+wc files - real time: 0.000000, system time: 0.000000, user time: 0.000000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
 1 medium
-wc_files - real time: 0.000000, system time: 0.000000, user time: 0.000000
-remove_block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+wc files - real time: 0.000000, system time: 0.000000, user time: 0.000000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
 1 big
-wc_files - real time: 0.050000, system time: 0.000000, user time: 0.000000
-remove_block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+wc files - real time: 0.050000, system time: 0.000000, user time: 0.040000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
 3 files
-wc_files - real time: 0.050000, system time: 0.000000, user time: 0.000000
-remove_block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+wc files - real time: 0.040000, system time: 0.000000, user time: 0.040000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
 6 files
-wc_files - real time: 0.080000, system time: 0.000000, user time: 0.000000
-remove_block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+wc files - real time: 0.090000, system time: 0.000000, user time: 0.080000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
 10 files
-wc_files - real time: 0.130000, system time: 0.000000, user time: 0.000000
-remove_block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+wc files - real time: 0.130000, system time: 0.000000, user time: 0.120000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
 add and remove
-add and remove big file 20 times - real time: 4.650000, system time: 0.000000, user time: 0.000000
+add and delete big file 100 times - real time: 4.420000, system time: 0.080000, user time: 4.320000
 
  dynamic Os
 1 small
-wc_files - real time: 0.010000, system time: 0.000000, user time: 0.000000
-remove_block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+wc files - real time: 0.000000, system time: 0.000000, user time: 0.000000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
 1 medium
-wc_files - real time: 0.000000, system time: 0.000000, user time: 0.000000
-remove_block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+wc files - real time: 0.000000, system time: 0.000000, user time: 0.000000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
 1 big
-wc_files - real time: 0.060000, system time: 0.000000, user time: 0.000000
-remove_block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+wc files - real time: 0.050000, system time: 0.000000, user time: 0.040000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
 3 files
-wc_files - real time: 0.050000, system time: 0.000000, user time: 0.000000
-remove_block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+wc files - real time: 0.040000, system time: 0.000000, user time: 0.040000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
 6 files
-wc_files - real time: 0.090000, system time: 0.000000, user time: 0.000000
-remove_block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+wc files - real time: 0.080000, system time: 0.000000, user time: 0.080000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
 10 files
-wc_files - real time: 0.130000, system time: 0.000000, user time: 0.000000
-remove_block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+wc files - real time: 0.120000, system time: 0.000000, user time: 0.120000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
 add and remove
-add and remove big file 20 times - real time: 4.620000, system time: 0.010000, user time: 0.000000
+add and delete big file 100 times - real time: 4.350000, system time: 0.070000, user time: 4.260000
+
+Różnice pomiędzy flagami O0, O3 oraz Os są bardzo małe. Flaga Os osiąga średnio najlepsze wyniki dla każdego typu
+bilbioteki, przez co można wnioskować, że najbardziej przyspiesza ona działanie programu. Biblioteki O0 i O3 osiągają
+średnio zbliżone wyniki, przez co nie można wskazać, która jest szybsza.

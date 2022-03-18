@@ -2,16 +2,16 @@ CC = gcc
 CFLAGS = -Wall
 
 static:
-	make -C ../zad1 static
-	$(CC) $(CFLAGS) $(OPT) ../zad2/test.c -I../zad1 -lwclibrary -L../zad1 -o test
+	make -C ../zad1 static OPT=$(OPT)
+	$(CC) $(OPT) $(CFLAGS) ../zad2/test.c -I../zad1 -lwclibrary -L../zad1 -o test
 
 shared:
-	make -C ../zad1 shared
-	$(CC) $(CFLAGS) $(OPT) ../zad2/test.c -I../zad1 -lwclibrary -L../zad1 -o test
+	make -C ../zad1 shared OPT=$(OPT)
+	$(CC) $(OPT) $(CFLAGS) ../zad2/test.c -I../zad1 -lwclibrary -L../zad1 -o test
 
 dynamic:
-	make -C ../zad1 shared
-	$(CC) $(CFLAGS) $(OPT) ../zad2/test.c -ldl -D DYNAMIC -o test
+	make -C ../zad1 shared OPT=$(OPT)
+	$(CC) $(OPT) $(CFLAGS) ../zad2/test.c -ldl -D DYNAMIC -o test
 
 tests:
 	@printf "1 small\n" >> raport3b.txt

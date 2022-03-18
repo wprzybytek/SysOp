@@ -33,12 +33,15 @@ test-all:
 	make static
 	@printf "static\n" > raport3a.txt
 	make tests
+	make clean
 	make shared
 	@printf "\n shared\n" >> raport3a.txt
 	make tests
+	make clean
 	make dynamic
 	@printf "\n dynamic\n" >> raport3a.txt
 	make tests
+	make clean
 
 clean:
 	make -C ../zad2 clean

@@ -1,2 +1,69 @@
 static
 1 small
+wc files - real time: 0.010000, system time: 0.000000, user time: 0.000000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+1 medium
+wc files - real time: 0.000000, system time: 0.000000, user time: 0.000000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+1 big
+wc files - real time: 0.050000, system time: 0.000000, user time: 0.040000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+3 files
+wc files - real time: 0.040000, system time: 0.000000, user time: 0.040000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+6 files
+wc files - real time: 0.080000, system time: 0.000000, user time: 0.080000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+10 files
+wc files - real time: 0.130000, system time: 0.000000, user time: 0.120000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+add and remove
+add and delete big file 100 times - real time: 4.360000, system time: 0.070000, user time: 4.260000
+
+ shared
+1 small
+wc files - real time: 0.000000, system time: 0.000000, user time: 0.000000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+1 medium
+wc files - real time: 0.000000, system time: 0.000000, user time: 0.000000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+1 big
+wc files - real time: 0.040000, system time: 0.000000, user time: 0.040000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+3 files
+wc files - real time: 0.050000, system time: 0.000000, user time: 0.040000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+6 files
+wc files - real time: 0.080000, system time: 0.000000, user time: 0.080000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+10 files
+wc files - real time: 0.130000, system time: 0.000000, user time: 0.120000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+add and remove
+add and delete big file 100 times - real time: 4.340000, system time: 0.060000, user time: 4.260000
+
+ dynamic
+1 small
+wc files - real time: 0.000000, system time: 0.000000, user time: 0.000000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+1 medium
+wc files - real time: 0.000000, system time: 0.000000, user time: 0.000000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+1 big
+wc files - real time: 0.040000, system time: 0.000000, user time: 0.040000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+3 files
+wc files - real time: 0.040000, system time: 0.000000, user time: 0.040000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+6 files
+wc files - real time: 0.090000, system time: 0.000000, user time: 0.080000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+10 files
+wc files - real time: 0.130000, system time: 0.000000, user time: 0.120000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+add and remove
+add and delete big file 100 times - real time: 4.360000, system time: 0.080000, user time: 4.250000
+
+Czas wykonywania dla wszystkich bibliotek wydaje się być bardzo zbliżony. Biblioteka współdzielona jest w podanych
+testach odbrobinę szybsza niż bibliteka statyczna i dynamiczna, których czasy są niemal identyczne. Różnica pomiędzy
+bibliotekami jest jednak zbyt mała, aby móc wysunąć wnioski na temat szybkości ich działania.
