@@ -1,0 +1,20 @@
+1 small
+wc files - real time: 0.010000, system time: 0.000000, user time: 0.000000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+1 medium
+wc files - real time: 0.000000, system time: 0.000000, user time: 0.000000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+1 big
+wc files - real time: 0.120000, system time: 0.000000, user time: 0.100000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+3 files
+wc files - real time: 0.110000, system time: 0.000000, user time: 0.100000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+6 files
+wc files - real time: 0.210000, system time: 0.000000, user time: 0.200000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+10 files
+wc files - real time: 0.330000, system time: 0.000000, user time: 0.310000
+remove block - real time: 0.000000, system time: 0.000000, user time: 0.000000
+
+add and delete big file 100 times - real time: 10.990000, system time: 0.120000, user time: 10.750000
