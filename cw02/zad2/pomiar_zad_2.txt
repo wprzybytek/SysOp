@@ -1,0 +1,4 @@
+a occurrences: overal = 42687, line = 5022
+library functions - real time: 0.030000, system time: 0.000000, user time: 0.020000
+a occurrences: overal = 42687, line = 5022
+system functions - real time: 0.450000, system time: 0.290000, user time: 0.140000

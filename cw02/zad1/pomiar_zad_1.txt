@@ -1,0 +1,2 @@
+library functions - real time: 0.030000, system time: 0.000000, user time: 0.020000
+system functions - real time: 0.310000, system time: 0.160000, user time: 0.140000
