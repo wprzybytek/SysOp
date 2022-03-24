@@ -2,40 +2,51 @@
 #include <stdlib.h>
 #include <dirent.h>
 #include <string.h>
+#include <time.h>
 #include <sys/stat.h>
 
-char* determine_file_type(unsigned int stmode) {
-    char type[10];
-    type[0] = '\0';
+void determine_file_type(unsigned int stmode, char* type, int* types) {
     if(S_ISDIR(stmode)) {
         strcat(type, "dir");
+        types[0] += 1;
     }
     else if(S_ISREG(stmode)) {
         strcat(type, "file");
+        types[1] += 1;
     }
     else if(S_ISCHR(stmode)) {
         strcat(type, "char dev");
+        types[2] += 1;
     }
     else if(S_ISBLK(stmode)) {
         strcat(type, "block dev");
+        types[3] += 1;
     }
     else if(S_ISFIFO(stmode)) {
         strcat(type, "fifo");
+        types[4] += 1;
     }
     else if(S_ISLNK(stmode)) {
         strcat(type, "slink");
+        types[5] += 1;
     }
     else if(S_ISSOCK(stmode)) {
         strcat(type, "sock");
+        types[6] += 1;
     }
-    
-    return type;
 }
 
-void search_directory(char* dir_path) {
+void print_types_no(int* types) {
+    printf("directories: %d, files: %d, "
+           "char devs: %d, block devs: %d, fifo: %d, slinks: %d, sockets: %d\n",
+           types[0], types[1], types[2], types[3], types[4], types[5], types[6]);
+}
+
+void search_directory(char* dir_path, int* types) {
     struct dirent *file;
     DIR* directory;
     struct stat file_stat;
+
     directory = opendir(dir_path);
     if(directory == NULL) {
         printf("Directory not found.\n");
@@ -54,11 +65,16 @@ void search_directory(char* dir_path) {
         strcat(path, file->d_name);
 
         lstat(path, &file_stat);
-        printf("%s %lu %ld\n",
-               path, file_stat.st_nlink, file_stat.st_size);
+        char type[10];
+        type[0] = '\0';
+        determine_file_type(file_stat.st_mode, type, types);
+
+        printf("%s %lu %s %ld %s %s\n",
+               path, file_stat.st_nlink, type, file_stat.st_size,
+               ctime(&file_stat.st_atime), ctime(&file_stat.st_mtime));
 
         if(S_ISDIR(file_stat.st_mode)) {
-            search_directory(path);
+            search_directory(path, types);
         }
     }
 
@@ -71,5 +87,9 @@ int main(int argc, char** argv) {
         exit(0);
     }
 
-    search_directory(argv[1]);
+    int types[7] = {0, 0, 0, 0, 0, 0, 0};
+    search_directory(argv[1], types);
+    print_types_no(types);
+
+    return 0;
 }
