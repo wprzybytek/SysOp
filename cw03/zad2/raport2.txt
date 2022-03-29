@@ -1,0 +1,36 @@
+Sum for 1 processes and rectangles of size 0.000100: 3.141593
+real time: 0.000000, system time: 0.000000, user time: 0.000000
+
+Sum for 10 processes and rectangles of size 0.000100: 3.141594
+real time: 0.000000, system time: 0.000000, user time: 0.000000
+
+Sum for 100 processes and rectangles of size 0.000100: 3.141588
+real time: 0.020000, system time: 0.000000, user time: 0.000000
+
+Sum for 1000 processes and rectangles of size 0.000100: 3.141599
+real time: 0.080000, system time: 0.040000, user time: 0.000000
+
+Sum for 1 processes and rectangles of size 0.000010: 3.141593
+real time: 0.000000, system time: 0.000000, user time: 0.000000
+
+Sum for 10 processes and rectangles of size 0.000010: 3.141594
+real time: 0.000000, system time: 0.000000, user time: 0.000000
+
+Sum for 100 processes and rectangles of size 0.000010: 3.141588
+real time: 0.010000, system time: 0.000000, user time: 0.000000
+
+Sum for 1000 processes and rectangles of size 0.000010: 3.141599
+real time: 0.090000, system time: 0.050000, user time: 0.000000
+
+Sum for 1 processes and rectangles of size 0.000001: 3.141593
+real time: 0.030000, system time: 0.000000, user time: 0.000000
+
+Sum for 10 processes and rectangles of size 0.000001: 3.141594
+real time: 0.010000, system time: 0.000000, user time: 0.000000
+
+Sum for 100 processes and rectangles of size 0.000001: 3.141588
+real time: 0.010000, system time: 0.000000, user time: 0.000000
+
+Sum for 1000 processes and rectangles of size 0.000001: 3.141599
+real time: 0.100000, system time: 0.050000, user time: 0.000000
+
