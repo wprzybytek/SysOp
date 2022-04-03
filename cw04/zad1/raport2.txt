@@ -1,0 +1,5 @@
+Z eksperymentu wynika, że proces dziecko po użyciu fork()
+dziedziczy ignorowane sygnały, handlery oraz ustawienia maski sygnałów.
+Nie zachowuje się natomiast lista oczekujących sygnałów.
+Po użyciu funkcji exec() dziedziczone są ignorowane sygnały, handlery,
+maska oraz lista oczekujących syngałów. 
