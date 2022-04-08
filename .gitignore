@@ -4,7 +4,4 @@
 *.o
 *.so
 *.a
-main
-test
-!main.c
-!test.c
+
