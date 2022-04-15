@@ -182,8 +182,7 @@ void get_lines()
         else if (file_content[index] == '\n')
         {
             run_sequence(queue, size);
-            while (wait(NULL) > 0)
-                ;
+            while (wait(NULL) > 0);
             size = 0;
         }
         else if (file_content[index] - '0' > 0 && file_content[index] - '0' < 10)

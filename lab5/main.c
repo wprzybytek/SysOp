@@ -39,6 +39,7 @@ int main () {
 //        execlp("ps", "ps", "aux", NULL);
 //    }
 
-    FILE* second = popen("wc -l", "w");
     FILE* first = popen("ps aux", "r");
+    FILE* second = popen("wc -l", "w");
+    
 }
