@@ -157,7 +157,7 @@ void run_sequence(int queue[25], int size)
     }
 }
 
-// process the rest of the file content to get all of the command sequences and run them
+// process the rest of the file content to get all the command sequences and run them
 void get_lines()
 {
     int index = 3;

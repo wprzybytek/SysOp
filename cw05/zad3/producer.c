@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <string.h>
 
+// fully clean buffer and fifo input in case the read content is shorter than the array size
 void clean_arrays(char* buffer, char* fifo, int chars) {
     for(int i = 0; i < chars; i++) {
         buffer[i] = '\0';
@@ -13,7 +13,7 @@ void clean_arrays(char* buffer, char* fifo, int chars) {
     fifo[chars + 2] = '\0';
 }
 
-
+// read file and write to fifo in format "{program number} {n chars from file}"
 int main(int argc, char** argv) {
     if (argc != 5) {
         printf("Wrong number of arguments.\n");
