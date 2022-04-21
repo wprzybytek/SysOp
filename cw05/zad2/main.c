@@ -17,11 +17,11 @@ void send_mail(char* address, char* title, char* content) {
 
 void read_mail(char* sortby) {
     if(strcmp(sortby, "date") == 0) {
-        FILE* mail = popen("mail -H | tail -n +3 | sort -d", "w");
+        FILE* mail = popen("mail -H | sort -d -r", "w");
         pclose(mail);
     }
     else if(strcmp(sortby, "sender") == 0) {
-        FILE* mail = popen("mail -H | tail -n +3 | sort -k 3", "w");
+        FILE* mail = popen("mail -H | sort -k 3", "w");
         pclose(mail);
     }
     else {
