@@ -29,4 +29,6 @@ int main() {
         printf("ERROR with creating main queue.\n");
         exit(-1);
     }
+
+    printf("%d %d\n", queue_key, queue_id);
 }
