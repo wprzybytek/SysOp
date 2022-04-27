@@ -18,6 +18,7 @@
 int queue_id, client_id, user_id;
 struct msg sending_msg, receiving_msg;
 int server_status = 1;
+pid_t catcher_pid = 0;
 
 void send_message() {
     CHECK(msgsnd(queue_id, &sending_msg, sizeof sending_msg.msg_content, 0), "ERROR with sending message.\n");
@@ -33,7 +34,7 @@ void connect() {
 
     CHECK(client_id = msgget(IPC_PRIVATE, 0600), "ERROR with creating client queue.\n");
     CHECK(queue_key = ftok(homedir, 1), "ERROR with getting main queue key.\n");
-    CHECK(queue_id = msgget(queue_key, IPC_CREAT | 0600), "ERROR with getting main queue.\n");
+    CHECK(queue_id = msgget(queue_key, 0), "ERROR with getting main queue.\n");
     sending_msg.mtype = INIT;
     sprintf(sending_msg.msg_content.text, "%d", client_id);
     send_message();
@@ -43,9 +44,17 @@ void connect() {
     printf("Granted session id: %d\n", user_id);
 }
 
-void handler(int signum) {
+void close_catcher() {
     CHECK(msgctl(client_id, IPC_RMID, NULL), "ERROR with removing client queue.\n");
-    server_status = 0;
+}
+
+void close_sender() {
+    sending_msg.mtype = STOP;
+    send_message();
+}
+
+void handler(int signum) {
+    exit(1);
 }
 
 void setup_handler() {
@@ -90,24 +99,29 @@ void send_2ONE(char* command[3]) {
     send_message();
 }
 
-void send_STOP(char* command[3]) {
-    sending_msg.mtype = STOP;
-    send_message();
+void send_STOP() {
+    kill(catcher_pid, SIGINT);
+    raise(SIGINT);
 }
 
 void send_command(char* command[3]) {
     if (strcmp(command[0], "LIST") == 0) send_LIST();
     else if (strcmp(command[0], "2ALL") == 0) send_2ALL(command);
     else if (strcmp(command[0], "2ONE") == 0) send_2ONE(command);
-    else if (strcmp(command[0], "STOP") == 0) send_STOP(command);
-    else printf("Unknown message type.\n");
+    else if (strcmp(command[0], "STOP") == 0) send_STOP();
+    else printf("Unknown message type - %s.\n", command[0]);
+}
+
+void process_STOP() {
+    kill(getppid(), SIGTERM);
+    exit(1);
 }
 
 void sender() {
+    atexit(close_sender);
     char buffer[250];
     int index = 0;
     while(server_status) {
-        printf("%d $ ", user_id);
         while ((buffer[index] = fgetc(stdin)) != '\n') {
             index += 1;
         }
@@ -120,16 +134,34 @@ void sender() {
         for (int i = 0; i < 3; i++) {
             if(command[i]) free(command[i]);
         }
+        index = 0;
         sleep(1);
+    }
+}
+
+void catcher() {
+    atexit(close_catcher);
+    while(server_status) {
+        CHECK(msgrcv(client_id, &receiving_msg, sizeof receiving_msg.msg_content, -200, 0), "ERROR with receiving message.\n");
+        if (receiving_msg.msg_content.sender_id == SERVER) {
+            if (receiving_msg.mtype == STOP) {
+                process_STOP();
+            }
+            else printf("%s\n", receiving_msg.msg_content.text);
+        }
+        else {
+            printf("Message from %d: %s\n", receiving_msg.msg_content.sender_id, receiving_msg.msg_content.text);
+            //printf("%d $ ", client_id);
+        }
     }
 }
 
 int main() {
     connect();
     setup_handler();
-    pid_t pid = fork();
-    if (!pid) {
-        //catcher();
+    catcher_pid = fork();
+    if (!catcher_pid) {
+        catcher();
     }
     else {
         sender();

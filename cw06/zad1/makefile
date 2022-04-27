@@ -1,6 +1,7 @@
 CC = gcc
 
 all:
+	@make -s clean
 	@make -s server
 	@make -s client
 
@@ -11,4 +12,4 @@ client:
 	@gcc -Wall client.c -o client
 
 clean:
-	rm -f *.o server client
+	@rm -f *.o server client

@@ -4,6 +4,8 @@
 #define _2ONE 103
 #define _2ALL 104
 
+#define SERVER 1000
+
 #define MAX_CLIENTS 5
 
 #define CHECK(x, y) do { \
