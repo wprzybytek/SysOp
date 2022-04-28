@@ -35,10 +35,14 @@ void catcher();
 
 // GLOBAL VARIABLES
 // main server queue, client-server queue, id given by server
-int queue_id, client_id, user_id;
+mqd_t queue_id;
+mqd_t client_id;
+int user_id;
 struct msg sending_msg, receiving_msg;
 int server_status = 1;
 pid_t catcher_pid = 0;
+char queue_name[100];
+time_t current_time;
 
 int main() {
     connect();
@@ -54,27 +58,40 @@ int main() {
 
 // initialize client by sending INIT message to server
 void connect() {
-    char *homedir = getenv("HOME");
-    key_t queue_key;
+    sprintf(queue_name, "/client-queue-%d", getpid());
 
-    CHECK(client_id = msgget(IPC_PRIVATE, 0600), "ERROR with creating client queue.\n");
-    CHECK(queue_key = ftok(homedir, 1), "ERROR with getting main queue key.\n");
-    CHECK(queue_id = msgget(queue_key, 0), "ERROR with getting main queue.\n");
+    struct mq_attr attr;
+    attr.mq_flags = 0;
+    attr.mq_maxmsg = 10;
+    attr.mq_msgsize = 512;
+    attr.mq_curmsgs = 0;
+
+    CHECK(client_id = mq_open(queue_name, O_RDONLY | O_CREAT, 0777, &attr), "ERROR with creating client queue.\n");
+    CHECK(queue_id = mq_open(SERVER_QUEUE, O_WRONLY), "ERROR with getting main queue.\n");
     sending_msg.mtype = INIT;
-    sprintf(sending_msg.msg_content.text, "%d", client_id);
-    send_message();
+    sprintf(sending_msg.msg_content.text, "%s", queue_name);
+    send_message(INIT);
+
+    // z niewiadomych powodow mq_receive zmienia client_id i queue_name wiec trzeba je kopiowac (doszedlem do tego po
+    // okolo 5 godzinach)
+    int client_id_copy = client_id;
+    char queue_name_copy[100];
+    strcpy(queue_name_copy, queue_name);
     receive_message();
+    client_id = client_id_copy;
+    strcpy(queue_name, queue_name_copy);
+
     user_id = atoi(receiving_msg.msg_content.text);
     sending_msg.msg_content.sender_id = user_id;
     printf("Granted session id: %d\n", user_id);
 }
 
-void send_message() {
-    CHECK(msgsnd(queue_id, &sending_msg, sizeof sending_msg.msg_content, 0), "ERROR with sending message.\n");
+void send_message(unsigned long prio) {
+    CHECK(mq_send(queue_id, (char*) &sending_msg, 512, prio), "ERROR with sending message.\n");
 }
 
 void receive_message() {
-    CHECK(msgrcv(client_id, &receiving_msg, sizeof receiving_msg.msg_content, -1000, 0), "ERROR with receiving message.\n");
+    CHECK(mq_receive(client_id,(char *) &receiving_msg, 512, NULL), "ERROR with receiving message.\n");
 }
 
 // initialize handler so that SIGINT makes program exit normally and atexit function works
@@ -92,7 +109,15 @@ void setup_handler() {
 void catcher() {
     atexit(close_catcher);
     while(server_status) {
-        CHECK(msgrcv(client_id, &receiving_msg, sizeof receiving_msg.msg_content, -200, 0), "ERROR with receiving message.\n");
+
+        // to samo co w connect
+        int client_id_copy = client_id;
+        char queue_name_copy[100];
+        strcpy(queue_name_copy, queue_name);
+        receive_message();
+        client_id = client_id_copy;
+        strcpy(queue_name, queue_name_copy);
+
         if (receiving_msg.msg_content.sender_id == SERVER) {
             if (receiving_msg.mtype == STOP) {
                 process_STOP();
@@ -100,22 +125,23 @@ void catcher() {
             else printf("%s\n", receiving_msg.msg_content.text);
         }
         else {
-            struct msqid_ds info;
-            msgctl(client_id, IPC_STAT, &info);
-            struct tm tm = *localtime(&info.msg_rtime);
+            time_t t = time(NULL);
+            struct tm tm = *localtime(&t);
             printf("%d-%02d-%02d %02d:%02d:%02d - Message from %d: %s\n", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec, receiving_msg.msg_content.sender_id, receiving_msg.msg_content.text);
         }
     }
 }
 
 void process_STOP() {
-    // send sigterm so atexit of sender will not trigger
-    kill(getppid(), SIGTERM);
+    kill(getppid(), SIGINT);
     exit(1);
 }
 
 void close_catcher() {
-    CHECK(msgctl(client_id, IPC_RMID, NULL), "ERROR with removing client queue.\n");
+    CHECK(mq_close(queue_id), "ERROR with closing main queue.\n");
+    CHECK(mq_close(client_id), "ERROR with closing client queue.\n");
+    sleep(1);
+    CHECK(mq_unlink(queue_name), "ERROR with removing client queue.\n");
 }
 
 // sender functions
@@ -168,7 +194,7 @@ void send_command(char* command[3]) {
 
 void send_LIST() {
     sending_msg.mtype = LIST;
-    send_message();
+    send_message(LIST);
 }
 
 void send_2ALL(char* command[3]) {
@@ -179,7 +205,7 @@ void send_2ALL(char* command[3]) {
     sending_msg.mtype = _2ALL;
     sending_msg.msg_content.text[0] = '\0';
     strcpy(sending_msg.msg_content.text, command[1]);
-    send_message();
+    send_message(_2ALL);
 }
 
 void send_2ONE(char* command[3]) {
@@ -191,7 +217,7 @@ void send_2ONE(char* command[3]) {
     sending_msg.msg_content.text[0] = '\0';
     strcpy(sending_msg.msg_content.text, command[2]);
     sending_msg.msg_content.receiver_id = atoi(command[1]);
-    send_message();
+    send_message(_2ONE);
 }
 
 void send_STOP() {
@@ -201,5 +227,7 @@ void send_STOP() {
 
 void close_sender() {
     sending_msg.mtype = STOP;
-    send_message();
+    send_message(STOP);
+    CHECK(mq_close(queue_id), "ERROR with closing main queue.\n");
+    CHECK(mq_close(client_id), "ERROR with closing client queue.\n");
 }

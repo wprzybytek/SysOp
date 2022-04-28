@@ -27,7 +27,8 @@ void process_LIST(struct msg message);
 void process_2ALL(struct msg message);
 void process_2ONE(struct msg message);
 void process_STOP(struct msg message);
-void process_message(char* message);
+void process_message(struct msg message);
+void send_message(struct msg message, mqd_t to, unsigned int prio);
 void run_server();
 
 //global variables
@@ -53,8 +54,18 @@ void create_queue() {
         free_clients[i] = 1;
     }
 
-    CHECK(queue_id = mq_open("/mq_server", O_RDONLY | O_CREAT, 0600), "ERROR with creating main queue.\n");
+    struct mq_attr attr;
+    attr.mq_flags = 0;
+    attr.mq_maxmsg = 10;
+    attr.mq_msgsize = 512;
+    attr.mq_curmsgs = 0;
+
+    CHECK((queue_id = mq_open(SERVER_QUEUE, O_RDONLY | O_CREAT, 0777, &attr)), "ERROR with creating main queue.\n");
     printf("Server started.\n");
+}
+
+void send_message(struct msg message, mqd_t to, unsigned int prio) {
+    CHECK(mq_send(to, (char *) &message, 512, prio), "ERROR with sending message.");
 }
 
 // initialize handler so that SIGINT makes program exit normally and atexit function works
@@ -71,21 +82,39 @@ void setup_handler() {
 
 // run queue and process messages
 void run_server() {
-    char message[MAX_SIZE];
+    struct msg message;
     while(server_status) {
-        CHECK(mq_receive(queue_id, message, sizeof message, NULL), "ERROR with receiving message.\n");
+        CHECK(mq_receive(queue_id, (char *) &message, 512, NULL), "ERROR with receiving message.\n");
         process_message(message);
     }
 }
 
-void process_message(char* message) {
-    //write_to_file(message.mtype, message.msg_content.sender_id);
-    struct msg_array msg_array;
-    if (strcmp(msg_array.args[0], "INIT") == 0) {
+void process_message(struct msg message) {
+    write_to_file(message.mtype, message.msg_content.sender_id);
+    switch (message.mtype) {
+        case INIT:
+            process_INIT(message);
+            break;
 
-    }
-    else if (strcmp(msg_array.args[0], "LIST") == 0) {
-        
+        case LIST:
+            process_LIST(message);
+            break;
+
+        case _2ALL:
+            process_2ALL(message);
+            break;
+
+        case _2ONE:
+            process_2ONE(message);
+            break;
+
+        case STOP:
+            process_STOP(message);
+            break;
+
+        default:
+            printf("ERROR unknown mtype %lu.\n", message.mtype);
+            exit(-1);
     }
 }
 
@@ -99,12 +128,11 @@ void process_INIT(struct msg message) {
         }
     }
     printf("New client: %d.\n", client_number);
-    client_queues[client_number] = atoi(message.msg_content.text);
+    CHECK((client_queues[client_number] = mq_open(message.msg_content.text, O_WRONLY)), "ERROR with opening client queue.\n");
     struct msg client_msg;
     client_msg.mtype = INIT;
     sprintf(client_msg.msg_content.text, "%d", client_number);
-    CHECK(msgsnd(client_queues[client_number], &client_msg, sizeof client_msg.msg_content, 0), "ERROR with sending message.\n");
-    client_number += 1;
+    send_message(client_msg, client_queues[client_number], INIT);
 }
 
 void process_LIST(struct msg message) {
@@ -120,20 +148,20 @@ void process_LIST(struct msg message) {
     }
     strcpy(client_msg.msg_content.text, buffer);
     client_msg.msg_content.sender_id = SERVER;
-    CHECK(msgsnd(client_queues[message.msg_content.sender_id], &client_msg, sizeof message.msg_content, 0), "ERROR with sending message.\n");
+    send_message(client_msg, client_queues[message.msg_content.sender_id], LIST);
 }
 
 void process_2ALL(struct msg message) {
     for (int i = 0; i < MAX_CLIENTS; i++) {
         if (i != message.msg_content.sender_id && !free_clients[i]) {
-            CHECK(msgsnd(client_queues[i], &message, sizeof message.msg_content, 0), "ERROR with sending message.\n");
+            send_message(message, client_queues[i], _2ALL);
         }
     }
 }
 
 void process_2ONE(struct msg message) {
     if (!free_clients[message.msg_content.receiver_id]) {
-        CHECK(msgsnd(client_queues[message.msg_content.receiver_id], &message, sizeof message.msg_content, 0), "ERROR with sending message.\n");
+        send_message(message, client_queues[message.msg_content.receiver_id], _2ONE);
     }
 }
 
@@ -146,7 +174,9 @@ void process_STOP(struct msg message) {
 // close server
 void close_server() {
     send_stop();
-    CHECK(msgctl(queue_id, IPC_RMID, NULL), "ERROR with removing main queue.\n");
+    sleep(1);
+    CHECK(mq_close(queue_id), "ERROR with closing main queue.\n");
+    CHECK(mq_unlink(SERVER_QUEUE), "ERROR with removing main queue.\n");
     fclose(output);
 }
 
@@ -156,16 +186,15 @@ void send_stop() {
     message.msg_content.sender_id = SERVER;
     for (int i = 0; i < MAX_CLIENTS; i++) {
         if (!free_clients[i]) {
-            CHECK(msgsnd(client_queues[i], &message, sizeof message.msg_content, 0), "ERROR with sending message.\n");
+            send_message(message, client_queues[i], STOP);
         }
     }
 }
 
 // write console logs to file after every received message
 void write_to_file(int type, int id) {
-    struct msqid_ds info;
-    msgctl(queue_id, IPC_STAT, &info);
-    struct tm tm = *localtime(&info.msg_rtime);
+    time_t t = time(NULL);
+    struct tm tm = *localtime(&t);
     char buffer[250];
     sprintf(buffer, "time: %d-%02d-%02d %02d:%02d:%02d, id: %d, type: %d\n", tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec, id, type);
     int end;
@@ -177,3 +206,5 @@ void write_to_file(int type, int id) {
     }
     fwrite(buffer, end * sizeof(char), 1, output);
 }
+
+
