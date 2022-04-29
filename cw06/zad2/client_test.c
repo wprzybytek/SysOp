@@ -72,13 +72,9 @@ void connect() {
     sprintf(sending_msg.msg_content.text, "%s", queue_name);
     send_message(INIT);
 
-    // z niewiadomych powodow mq_receive zmienia client_id i queue_name wiec trzeba je kopiowac
-    int client_id_copy = client_id;
-    char queue_name_copy[100];
-    strcpy(queue_name_copy, queue_name);
-    receive_message();
-    client_id = client_id_copy;
-    strcpy(queue_name, queue_name_copy);
+    printf("1. Client id: %d, Queue name: %s\n", client_id, queue_name);
+    mq_receive(client_id,(char *) &receiving_msg, 512, NULL);
+    printf("2. Client id: %d, Queue name: %s\n", client_id, queue_name);
 
     user_id = atoi(receiving_msg.msg_content.text);
     sending_msg.msg_content.sender_id = user_id;
@@ -208,7 +204,7 @@ void send_2ALL(char* command[3]) {
 }
 
 void send_2ONE(char* command[3]) {
-        if (!command[1] || !command[2]) {
+    if (!command[1] || !command[2]) {
         printf("Wrong number of arguments.\n");
         return;
     }
