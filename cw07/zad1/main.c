@@ -94,7 +94,6 @@ int main(int argc, char** argv) {
         children[i] = fork();
         if (!children[i]) {
             execlp("./cook", "./cook", NULL);
-            printf("gowno\n");
         }
     }
     while (wait(NULL) > 0);
