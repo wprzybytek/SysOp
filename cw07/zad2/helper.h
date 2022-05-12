@@ -16,8 +16,12 @@
 #define TABLE_COOK 3
 #define TABLE_DELIVERER 4
 
-#define SEM_P 's'
-#define MEM_P 'm'
+#define FURNACE_SEM "/furnace"
+#define FURNACE_COOK_SEM "/furnace_cook"
+#define TABLE_SEM "/table"
+#define TABLE_COOK_SEM "/table_cook"
+#define TABLE_DELIVERER_SEM "/table_deliverer"
+#define MEM "/memory"
 
 #define CHECK(x, y) do { \
   int retval = (x); \
@@ -27,12 +31,29 @@
   } \
 } while (0)
 
-union semun {
-    int val;
-    struct semid_ds* buf;
-    unsigned short* array;
-    struct seminfo* __buf;
+#define CHECK_SEM(x, y) do { \
+  sem_t* retval = (x); \
+  if (retval == (sem_t *)SEM_FAILED) { \
+    printf(y); \
+    exit(-1); \
+  } \
+} while (0)
+
+struct semaphores {
+    sem_t *furnace;
+    sem_t *furnace_cook;
+    sem_t *table;
+    sem_t *table_cook;
+    sem_t *table_deliverer;
 };
+
+void post_semaphore(sem_t* semaphore) {
+    CHECK(sem_post(semaphore), "sem_post");
+}
+
+void wait_sempahore(sem_t* semaphore) {
+    CHECK(sem_wait(semaphore), "sem_wait");
+}
 
 int random_int(int a, int b) {
     return rand() % b + a;
@@ -54,14 +75,5 @@ void print_message(char* message) {
     get_current_time(current_time);
     printf("[%d - %s] %s\n", getpid(), current_time, message);
 }
-
-struct sembuf semaphore_msg(int num, int op) {
-    struct sembuf msg;
-    msg.sem_num = num;
-    msg.sem_op = op;
-    msg.sem_flg = 0;
-    return msg;
-}
-
 
 
