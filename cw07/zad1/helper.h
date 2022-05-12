@@ -8,12 +8,16 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include <time.h>
+#include <sys/time.h>
 
 #define FURNACE 0
 #define FURNACE_COOK 1
 #define TABLE 2
 #define TABLE_COOK 3
 #define TABLE_DELIVERER 4
+
+#define SEM_P 's'
+#define MEM_P 'm'
 
 #define CHECK(x, y) do { \
   int retval = (x); \
@@ -30,25 +34,25 @@ union semun {
     struct seminfo* __buf;
 };
 
-struct semaphores {
-    int furnace;
-    int furnace_cook;
-    int table;
-    int table_cook;
-    int table_deliverer;
-};
-
 int random_int(int a, int b) {
-    srand(time(NULL));
-    return (rand() + getpid()) % b + a;
+    return rand() % b + a;
+}
+
+void get_current_time(char current_time[50]){
+    struct timeval cur_time;
+    gettimeofday(&cur_time, NULL);
+    int ml_sec = cur_time.tv_usec / 1000;
+
+    char buffer[50];
+    strftime(buffer, 50, "%H:%M:%S", localtime(&cur_time.tv_sec));
+
+    sprintf(current_time, "%s:%03d", buffer, ml_sec);
 }
 
 void print_message(char* message) {
-    time_t t = time(NULL);
-    struct tm tm = *localtime(&t);
-    printf("[%d - %d-%02d-%02d %02d:%02d:%02d] %s\n", getpid(),
-           tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, tm.tm_hour, tm.tm_min, tm.tm_sec,
-           message);
+    char current_time[50];
+    get_current_time(current_time);
+    printf("[%d - %s] %s\n", getpid(), current_time, message);
 }
 
 struct sembuf semaphore_msg(int num, int op) {

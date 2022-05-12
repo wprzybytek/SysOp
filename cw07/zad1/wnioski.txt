@@ -1,0 +1,8 @@
+3 kucharzy, 8 dostawcow
+po polozeniu pizzy na stol jest ona od razu zabierana przez dostawce,
+przez co nie dochodzi do sytuacji w ktorej wiecej niz jedna pizza znajduje
+sie jednoczesnie na stole
+
+8 kucharzy, 3 dostawcow
+piec oraz stol sa caly czas przepelnione i nie dochodzi do sytuacji,
+w ktorej piec lub stol jest pusty

@@ -22,7 +22,7 @@ void setup_handler() {
 void connect_semaphores() {
     char* homedir = getenv("HOME");
     key_t sem_key;
-    CHECK(sem_key = ftok(homedir, 1),
+    CHECK(sem_key = ftok(homedir, SEM_P),
           "ERROR with getting semaphores key - cook.\n");
     CHECK(sem_set = semget(sem_key, 0, 0),
           "ERROR with getting semaphores set - cook.\n");
@@ -31,7 +31,7 @@ void connect_semaphores() {
 void connect_memory() {
     char* homedir = getenv("HOME");
     key_t mem_key;
-    CHECK(mem_key = ftok(homedir, 1),
+    CHECK(mem_key = ftok(homedir, MEM_P),
           "ERROR with getting memory key - cook.\n");
     CHECK(mem_id = shmget(mem_key, 0, 0),
           "ERROR with getting shared memory - cook.\n");
@@ -43,12 +43,10 @@ void connect_memory() {
 }
 
 void change_semaphore(int num, int op) {
-    //cnt += 1;
-    //printf("%d %d %d\n", cnt, getpid(), semctl(sem_set, FURNACE, GETVAL));
     struct sembuf msg[1];
     msg[0] = semaphore_msg(num, op);
     CHECK(semop(sem_set, msg, 1),
-          "sem_set - cook.\n");
+          "sem_set.\n");
 }
 
 int make_pizza() {
@@ -68,6 +66,7 @@ int put_pizza(int n) {
         if (memory[i] == -1) {
             memory[i] = n;
             index = i;
+            break;
         }
     }
     memory[0] += 1;
@@ -95,22 +94,42 @@ void take_pizza(int index) {
     change_semaphore(FURNACE, 1);
     change_semaphore(FURNACE_COOK, 1);
 
-    char message[37];
-    sprintf(message, "Taking out pizza %d. Pizzas in oven %d", pizza, count);
-    print_message(message);
+    char message1[37];
+    sprintf(message1, "Taking out pizza %d. Pizzas in oven %d", pizza, count);
+    print_message(message1);
+
+    change_semaphore(TABLE_COOK, -1);
+    change_semaphore(TABLE, -1);
+
+    for (int i = 6; i <= 11; i++) {
+        if (memory[i] == -1) {
+            memory[i] = pizza;
+            break;
+        }
+    }
+    memory[6] += 1;
+    count = memory[6];
+
+    change_semaphore(TABLE_DELIVERER, 1);
+    change_semaphore(TABLE, 1);
+
+    char message2[52];
+    sprintf(message2, "Putting pizza %d on the table. Pizzas on the table %d", pizza, count);
+    print_message(message2);
 }
 
 int main() {
     connect_semaphores();
     connect_memory();
     setup_handler();
+    srand(getpid());
 
     int n, index;
-    for (int i = 0; i < 2; i++) {
+    while(1) {
         n = make_pizza();
-        //sleep(random_int(1, 2));
+        sleep(random_int(1, 2));
         index = put_pizza(n);
-        //sleep(random_int(4, 5));
+        sleep(random_int(4, 5));
         take_pizza(index);
     }
 }

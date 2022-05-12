@@ -31,7 +31,7 @@ void setup_handler() {
 void create_shared_memory() {
     char* homedir = getenv("HOME");
     key_t mem_key;
-    CHECK(mem_key = ftok(homedir, 1),
+    CHECK(mem_key = ftok(homedir, MEM_P),
           "ERROR with creating memory key.\n");
     CHECK(mem_id = shmget(mem_key, 12 * sizeof (int), IPC_CREAT | 0660),
           "ERROR with creating shared memory.\n");
@@ -51,7 +51,7 @@ void create_shared_memory() {
 void create_semaphores() {
     char* homedir = getenv("HOME");
     key_t sem_key;
-    CHECK(sem_key = ftok(homedir, 1),
+    CHECK(sem_key = ftok(homedir, SEM_P),
           "ERROR with creating semaphores key.\n");
     CHECK(sem_set = semget(sem_key, 5, IPC_CREAT | 0660),
           "ERROR with creating semaphores set.\n");
@@ -94,6 +94,12 @@ int main(int argc, char** argv) {
         children[i] = fork();
         if (!children[i]) {
             execlp("./cook", "./cook", NULL);
+        }
+    }
+    for (int i = cooks; i < cooks + deliverers; i++) {
+        children[i] = fork();
+        if (!children[i]) {
+            execlp("./deliverer", "./deliverer", NULL);
         }
     }
     while (wait(NULL) > 0);
