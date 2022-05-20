@@ -1,0 +1,92 @@
+
+Current method: numbers, number of threads: 1
+thread: 0, time: 753 μs
+Total time: 1148 μs
+
+Current method: blocks, number of threads: 1
+thread: 0, time: 288 μs
+Total time: 655 μs
+
+Current method: numbers, number of threads: 2
+thread: 0, time: 365 μs
+thread: 1, time: 365 μs
+Total time: 818 μs
+
+Current method: blocks, number of threads: 2
+thread: 0, time: 192 μs
+thread: 1, time: 250 μs
+Total time: 670 μs
+
+Current method: numbers, number of threads: 4
+thread: 0, time: 210 μs
+thread: 1, time: 351 μs
+thread: 2, time: 355 μs
+thread: 3, time: 346 μs
+Total time: 983 μs
+
+Current method: blocks, number of threads: 4
+thread: 0, time: 128 μs
+thread: 1, time: 162 μs
+thread: 2, time: 202 μs
+thread: 3, time: 118 μs
+Total time: 746 μs
+
+Current method: numbers, number of threads: 8
+thread: 0, time: 92 μs
+thread: 1, time: 156 μs
+thread: 2, time: 163 μs
+thread: 3, time: 147 μs
+thread: 4, time: 91 μs
+thread: 5, time: 133 μs
+thread: 6, time: 353 μs
+thread: 7, time: 331 μs
+Total time: 772 μs
+
+Current method: blocks, number of threads: 8
+thread: 0, time: 64 μs
+thread: 1, time: 57 μs
+thread: 2, time: 48 μs
+thread: 3, time: 74 μs
+thread: 4, time: 51 μs
+thread: 5, time: 75 μs
+thread: 6, time: 70 μs
+thread: 7, time: 81 μs
+Total time: 871 μs
+
+Current method: numbers, number of threads: 16
+thread: 0, time: 134 μs
+thread: 1, time: 104 μs
+thread: 2, time: 46 μs
+thread: 3, time: 115 μs
+thread: 4, time: 201 μs
+thread: 5, time: 45 μs
+thread: 6, time: 84 μs
+thread: 7, time: 234 μs
+thread: 8, time: 75 μs
+thread: 9, time: 188 μs
+thread: 10, time: 91 μs
+thread: 11, time: 70 μs
+thread: 12, time: 72 μs
+thread: 13, time: 48 μs
+thread: 14, time: 158 μs
+thread: 15, time: 108 μs
+Total time: 1551 μs
+
+Current method: blocks, number of threads: 16
+thread: 0, time: 45 μs
+thread: 1, time: 47 μs
+thread: 2, time: 58 μs
+thread: 3, time: 30 μs
+thread: 4, time: 67 μs
+thread: 5, time: 61 μs
+thread: 6, time: 233 μs
+thread: 7, time: 30 μs
+thread: 8, time: 70 μs
+thread: 9, time: 30 μs
+thread: 10, time: 105 μs
+thread: 11, time: 70 μs
+thread: 12, time: 326 μs
+thread: 13, time: 96 μs
+thread: 14, time: 41 μs
+thread: 15, time: 137 μs
+Total time: 1455 μs

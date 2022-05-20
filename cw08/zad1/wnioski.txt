@@ -1,0 +1,2 @@
+1. metoda blocks jest szybsza niż numbers
+2. zwiększenie liczby wątków poprawia wydajność programu tylko do pewnej ich ilości, po przekroczeniu której wydajność zaczyna spadać

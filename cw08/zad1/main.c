@@ -1,34 +1,43 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <pthread.h>
-#include <sys/time.h>
-
-#define ARRAY_SIZE 50
-#define MAX_LINE_SIZE 100
-
-#define CHECK(x, y) do { \
-  int retval = (x); \
-  if (retval == -1) { \
-    printf(y); \
-    exit(-1); \
-  } \
-} while (0)
-
-struct message {
-    int start_index;
-    int fields;
-};
+#include "helper.h"
 
 int width, height;
 int max_val;
 int** image;
+unsigned long int* times;
+struct message message[ARRAY_SIZE];
 
-void clean_up() {
-    for (int i = 0; i < height; i++) {
-        free(image[i]);
+int main(int argc, char** argv) {
+    if (argc != 5) {
+        printf("Wrong number of arguments.\n");
+        exit(-1);
     }
-    free(image);
+    int threads_no;
+    char method[ARRAY_SIZE];
+    char src[ARRAY_SIZE];
+    char out[ARRAY_SIZE];
+    if (sscanf(argv[1], "%d", &threads_no) == 0 ||
+        sscanf(argv[2], "%s", method) == 0 ||
+        sscanf(argv[3], "%s", src) == 0 ||
+        sscanf(argv[4], "%s", out) == 0) {
+        printf("Wrong format of arguments.\n");
+        exit(-1);
+    }
+
+    struct timeval start, stop;
+    times = (unsigned long int*)malloc(threads_no * sizeof(unsigned long int));
+    printf("\nCurrent method: %s, number of threads: %d\n", method, threads_no);
+    get_image(src);
+
+    gettimeofday(&start, NULL);
+    pthread_t* threads = start_threads(threads_no, method);
+    end_threads(threads_no, threads);
+    gettimeofday(&stop, NULL);
+
+    save_result(out);
+    long unsigned int total_time = (stop.tv_sec - start.tv_sec) * 1000000 + stop.tv_usec - start.tv_usec;
+    printf("Total time: %lu μs\n", total_time);
+    free(threads);
+    free(times);
 }
 
 void get_image(char* src) {
@@ -50,6 +59,7 @@ void get_image(char* src) {
     for (int i = 0; i < height; i++) {
         image[i] = (int*)malloc(width * sizeof(int));
     }
+    atexit(clean_up);
 
     for (int i = 0; i < height; i++) {
         for (int j = 0; j < width; j++) {
@@ -60,12 +70,11 @@ void get_image(char* src) {
     fclose(file);
 }
 
-void* numbers(void* arg) {
-    struct message message = (message) arg;
-}
-
-void* blocks(void* arg) {
-    return;
+void clean_up() {
+    for (int i = 0; i < height; i++) {
+        free(image[i]);
+    }
+    free(image);
 }
 
 pthread_t* start_threads(int threads_no, char method[ARRAY_SIZE]) {
@@ -75,18 +84,29 @@ pthread_t* start_threads(int threads_no, char method[ARRAY_SIZE]) {
         int thread_fields = all_fields / threads_no;
 
         for (int i = 0; i < threads_no; i++) {
-            struct message message;
-            message.start_index = thread_fields * i;
-            message.fields = thread_fields;
+            (message + i)->start_index = thread_fields * i;
+            (message + i)->end_index = thread_fields * (i + 1);
+            (message + i)->index = i;
 
             if (i == threads_no - 1) {
-                message.fields += all_fields - ((i + 1) * thread_fields);
+                (message + i)->end_index = all_fields - 1;
             }
 
-            pthread_create(&threads[i], NULL, &numbers, (void *)message);
+            pthread_create(&threads[i], NULL, &numbers, (void *)(message + i));
         }
     }
     else if (strcmp(method, "blocks") == 0) {
+        for (int i = 0; i < threads_no; i++) {
+            (message + i)->start_index = i * ceil(width / threads_no);
+            (message + i)->end_index = (i + 1) * ceil(width / threads_no) - 1;
+            (message + i)->index = i;
+
+            if (i == threads_no - 1) {
+                (message + i)->end_index = width - 1;
+            }
+
+            pthread_create(&threads[i], NULL, &blocks, (void *)(message + i));
+        }
     }
     else {
         printf("Unknown method.\n");
@@ -96,28 +116,54 @@ pthread_t* start_threads(int threads_no, char method[ARRAY_SIZE]) {
     return threads;
 }
 
-int main(int argc, char** argv) {
-    if (argc != 5) {
-        printf("Wrong number of arguments.\n");
-        exit(-1);
+void* numbers(void* arg) {
+    struct message *message = arg;
+    struct timeval start, stop;
+    int x, y;
+
+    gettimeofday(&start, NULL);
+    for (int i = message->start_index; i < message->end_index; i++) {
+        y = i % width;
+        x = i / width;
+        image[x][y] = max_val - image[x][y];
     }
-    int threads_no;
-    char method[ARRAY_SIZE];
-    char src[ARRAY_SIZE];
-    char out[ARRAY_SIZE];
-    if (sscanf(argv[1], "%d", &threads_no) == 0 ||
-        sscanf(argv[2], "%s", method) == 0 ||
-        sscanf(argv[3], "%s", src) == 0 ||
-        sscanf(argv[4], "%s", out) == 0) {
-        printf("Wrong format of arguments.\n");
-        exit(-1);
+    gettimeofday(&stop, NULL);
+    times[message->index] = (stop.tv_sec - start.tv_sec) * 1000000 + stop.tv_usec - start.tv_usec;
+    pthread_exit(NULL);
+}
+
+void* blocks(void* arg) {
+    struct message *message = arg;
+    struct timeval start, stop;
+
+    gettimeofday(&start, NULL);
+    for (int i = 0; i < height; i++) {
+        for (int j = message->start_index; j <= message->end_index; j++) {
+            image[i][j] = max_val - image[i][j];
+        }
+    }
+    gettimeofday(&stop, NULL);
+    times[message->index] = (stop.tv_sec - start.tv_sec) * 1000000 + stop.tv_usec - start.tv_usec;
+    pthread_exit(NULL);
+}
+
+void end_threads(int threads_no, pthread_t* threads) {
+    for (int i = 0; i < threads_no; i++) {
+        pthread_join(threads[i], NULL);
+        printf("thread: %d, time: %lu μs\n", i, times[i]);
+    }
+}
+
+void save_result(char out[ARRAY_SIZE]) {
+    FILE* file = fopen(out, "w");
+
+    fprintf(file, "P2\n%d %d\n%d\n", width, height, max_val);
+
+    for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++)
+            fprintf(file, "%d ", image[i][j]);
+        fprintf(file, "\n");
     }
 
-    get_image(src);
-    atexit(clean_up);
-
-    pthread_t* threads = start_threads(threads_no, method);
-
-
-    printf("%d %d %d\n", image[0][0], image[0][1], image[0][2]);
+    fclose(file);
 }
