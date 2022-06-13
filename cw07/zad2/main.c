@@ -5,7 +5,7 @@ int mem_id;
 int cooks, deliverers;
 int* children;
 int* memory;
-
+./Makefile
 void clean() {
     CHECK(sem_close(sem.furnace), "ERROR with closing semaphore 0.\n");
     CHECK(sem_close(sem.furnace_cook), "ERROR with closing semaphore 1.\n");

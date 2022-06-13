@@ -3,39 +3,42 @@
 #include <pthread.h>
 #include <unistd.h>
 
-// uruchom n watkow, kazda inkrementuje zmienna globalna
+/*
+    stworz n watkow, kazdy wypisuje w petli numer i iteracje, glowny proces po 1000 iteracji
+*/
 
-int global = 0;
-pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
-
-void * increment() {
-    while (1) {
-        pthread_mutex_lock(&mutex);
-        global++;
-        printf("Glob = %d, thread number %lu\n", global, pthread_self());
-        pthread_mutex_unlock(&mutex);
+void message() {
+    pthread_t id = pthread_self();
+    //pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, NULL);
+    pthread_setcancelstate(PTHREAD_CANCEL_DISABLE, NULL);
+    int i = 0;
+    while (i < 10000) {
+        printf("[1] Thread %lu. Iteration %d.\n", id, i);
+        //pthread_testcancel();
+        printf("[2] Thread %lu. Iteration %d.\n", id, i);
+        i += 1;
     }
-    pthread_exit(NULL);
 }
 
 int main(int argc, char** argv) {
     if (argc != 2) {
-        printf("Enter number of threads.\n");
+        printf("Enter threads number.\n");
         exit(-1);
     }
-
-    pthread_mutexattr_t attr =
     int n = atoi(argv[1]);
-    pthread_t* threads = (pthread_t*)calloc(sizeof(pthread_t), n);
-
+    pthread_t* threads = (pthread_t *)calloc(n, sizeof(pthread_t));
     for (int i = 0; i < n; i++) {
-        if (pthread_create(&threads[i], NULL, increment, NULL) == -1) {
+        if (pthread_create(&threads[i], NULL, (void *)message, NULL) == -1) {
             printf("ERROR with creating thread %d.\n", i);
             exit(-1);
         }
     }
-    for (int i = 0; i < n; i++) {
-        pthread_join(threads[i], NULL);
+    int i = 0;
+    while (i < 1000) {
+        printf("Main program. Iteration %d.\n", i);
+        i += 1;
     }
-    free(threads);
+    for (int i = 0; i < n; i++) {
+        pthread_cancel(threads[i]);
+    }
 }
